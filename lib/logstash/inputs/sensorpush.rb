@@ -105,7 +105,13 @@ class SensorPushApiConnection
     req.body = JSON.generate(body)
     resp = self.send_request(req)
 
-    ret = resp["sensors"][sensor_id]
+    sensors = resp["sensors"]
+
+    if sensors.nil?
+      return []
+    end
+    
+    ret = sensors[sensor_id]
 
     if ret.nil?
       return []
